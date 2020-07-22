@@ -95,7 +95,7 @@ open class SOContainerViewController: UIViewController, UIGestureRecognizerDeleg
         }
         set {
             _topViewController?.view.removeFromSuperview()
-            _topViewController?.removeFromParent()
+            _topViewController?.removeFromParent  ()
             
             _topViewController = newValue
             
@@ -107,8 +107,7 @@ open class SOContainerViewController: UIViewController, UIGestureRecognizerDeleg
                 vc.didMove(toParent: self)
                 
                 if widthForPanGestureRecognizer > 0 {
-                    let xStart: CGFloat = self.menuSide == .left ? 0 : self.view.bounds.size.width - CGFloat(widthForPanGestureRecognizer)
-                    let panView = UIView(frame: CGRect(x: xStart, y: CGFloat(heightOffsetForPanGestureRecognizer), width: CGFloat(widthForPanGestureRecognizer), height: self.view.frame.size.height))
+                    let panView = UIView(frame: CGRect(x: 0, y: CGFloat(heightOffsetForPanGestureRecognizer), width: CGFloat(widthForPanGestureRecognizer), height: self.view.frame.size.height))
                     panView.backgroundColor = UIColor.clear
                     panView.addGestureRecognizer(self.createPanGestureRecognizer())
                     
@@ -293,7 +292,7 @@ extension SOContainerViewController {
 extension SOContainerViewController {
     
     fileprivate func vectorIsMoreHorizontal(_ point: CGPoint) -> Bool {
-        if abs(point.x) > abs(point.y) {
+        if fabs(point.x) > fabs(point.y) {
             return true
         }
         return false
@@ -303,11 +302,11 @@ extension SOContainerViewController {
         let frame = viewController.view.frame
         
         if menuSide == .left{
-            return abs(frame.origin.x) < frame.size.width / 2
+            return fabs(frame.origin.x) < frame.size.width / 2
         }
         
         if menuSide == .right{
-            return abs(frame.origin.x) < self.view.frame.width - frame.size.width / 2
+            return fabs(frame.origin.x) < self.view.frame.width - frame.size.width / 2
         }
         
         return false
